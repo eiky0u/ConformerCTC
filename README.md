@@ -18,19 +18,6 @@ See the task assignment [here](https://github.com/markovka17/dla/tree/2024/hw1_a
 
 Follow these steps to install the project:
 
-0. (Optional) Create and activate new environment using [`conda`](https://conda.io/projects/conda/en/latest/user-guide/getting-started.html) or `venv` ([`+pyenv`](https://github.com/pyenv/pyenv)).
-
-   ```bash
-   # create env
-   ~/.pyenv/versions/PYTHON_VERSION/bin/python3 -m venv project_env
-
-   # alternatively, using default python version
-   python3 -m venv project_env
-
-   # activate env
-   source project_env/bin/activate
-   ```
-
 1. Install all required packages
 
    ```bash
