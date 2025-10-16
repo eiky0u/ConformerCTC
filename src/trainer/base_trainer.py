@@ -167,7 +167,6 @@ class BaseTrainer:
         try:
             self._train_process()
         except KeyboardInterrupt as e:
-            # --- DDP: сохраняем только на главном процессе ---
             if self.is_main_process:
                 self.logger.info("Saving model on keyboard interrupt")
                 self._save_checkpoint(self._last_epoch, save_best=False)
@@ -191,7 +190,6 @@ class BaseTrainer:
             logs.update(result)
 
             # print logged information to the screen
-            # (оставляем как было — если хочешь, можешь обернуть в is_main_process)
             for key, value in logs.items():
                 self.logger.info(f"    {key:15s}: {value}")
 
@@ -224,10 +222,8 @@ class BaseTrainer:
         self.writer.set_step((epoch - 1) * self.epoch_len)
         self.writer.add_scalar("epoch", epoch)
 
-        # --- DDP: сообщаем самплеру эпоху, если он распределённый ---
         if hasattr(self.train_dataloader, "sampler") and isinstance(self.train_dataloader.sampler, DistributedSampler):
             self.train_dataloader.sampler.set_epoch(epoch)
-        # -------------------------------------------------------------
 
         for batch_idx, batch in enumerate(
             tqdm(self.train_dataloader, desc="train", total=self.epoch_len)
@@ -489,12 +485,10 @@ class BaseTrainer:
                 'model_best.pth'(do not duplicate the checkpoint as
                 checkpoint-epochEpochNumber.pth)
         """
-        # --- DDP: не сохраняем на не-нулевых ранках ---
         if self.world_size > 1 and not self.is_main_process:
             return
 
         arch = type(self.model).__name__
-        # --- DDP: сохраняем веса без обёртки DDP ---
         model_to_save = self.model.module if isinstance(self.model, DDP) else self.model
 
         state = {
@@ -544,7 +538,6 @@ class BaseTrainer:
                 "of the checkpoint. This may yield an exception when state_dict is loaded."
             )
 
-        # --- DDP: корректируем префиксы 'module.' при загрузке ---
         state_dict = checkpoint["state_dict"]
         model_keys = self.model.state_dict().keys()
         has_module_in_model = any(k.startswith("module.") for k in model_keys)
@@ -592,7 +585,6 @@ class BaseTrainer:
             print(f"Loading model weights from: {pretrained_path} ...")
         checkpoint = torch.load(pretrained_path, self.device)
 
-        # --- DDP: поддержка формата с/без "state_dict" и префикса 'module.' ---
         if checkpoint.get("state_dict") is not None:
             state_dict = checkpoint["state_dict"]
         else:
