@@ -11,6 +11,7 @@
 ## About
 
 Implementation for training and inference of a Conformer CTC ASR model (PyTorch + Hydra).
+[Report](https://www.comet.com/eiky0u/conformer-ctc/reports/xwx2t9Pk7t3nFk8L3KsIh6vuP)
 
 ## Installation
 
