@@ -34,7 +34,7 @@ Follow these steps to install the project:
 To train a model, run the following command:
 
 ```bash
-python3 train.py -cn=CONFIG_NAME HYDRA_CONFIG_ARGUMENTS
+torchrun --nproc_per_node=2 --master_port=29501 train.py -cn=CONFIG_NAME HYDRA_CONFIG_ARGUMENTS
 ```
 
 Where `CONFIG_NAME` is a config from `src/configs` and `HYDRA_CONFIG_ARGUMENTS` are optional arguments.
