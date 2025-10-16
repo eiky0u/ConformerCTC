@@ -17,7 +17,6 @@ def bf16_supported() -> bool:
         return False
     if hasattr(torch.cuda, "is_bf16_supported"):
         return torch.cuda.is_bf16_supported()
-    # запасной путь: Ampere (SM >= 80) и новее
     major, minor = torch.cuda.get_device_capability()
     return major >= 8
 
@@ -66,7 +65,7 @@ class Trainer(BaseTrainer):
         do_clip = bool(grad_clip and grad_clip > 0)
 
         batch = self.move_batch_to_device(batch)
-        batch = self.transform_batch(batch)  # transform batch on device -- faster
+        batch = self.transform_batch(batch)  
 
         metric_funcs = self.metrics["inference"]
         if self.is_train:
@@ -78,7 +77,7 @@ class Trainer(BaseTrainer):
             with ctx:
                 outputs = self.model(**batch)
                 batch.update(outputs)
-                losses = self.criterion(**batch)            # ожидает logits/logit_length из outputs
+                losses = self.criterion(**batch)           
                 loss = losses["loss"]
 
             if use_scaler:
