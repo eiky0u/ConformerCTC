@@ -1,0 +1,11 @@
+_target_: src.model.ConformerCTC
+n_mels: 64
+d_model: 128
+d_ff: 512
+num_blocks: 6
+n_heads: 2
+conv_kernel_size: 7
+p_ff: 0.1 
+p_conv: 0.1 
+p_mhsa: 0.1 
+p_sub: 0.1

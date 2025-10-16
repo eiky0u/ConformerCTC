@@ -1,0 +1,25 @@
+--index-url https://download.pytorch.org/whl/cu121
+--extra-index-url https://pypi.org/simple
+
+torch==2.2.0+cu121
+torchvision==0.17.0+cu121
+torchaudio==2.2.0+cu121
+soundfile
+numpy==1.26.4
+scipy
+torch_audiomentations
+tqdm
+matplotlib
+pandas
+wandb
+comet_ml
+hydra-core
+datasets
+wget
+editdistance
+tokenizers==0.22.1
+transformers==4.57.0
+
+black
+isort
+pre-commit

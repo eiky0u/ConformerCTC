@@ -1,0 +1,15 @@
+instance_transforms:
+  inference:
+    get_spectrogram:
+      _target_: torchvision.transforms.v2.Compose
+      transforms:
+        - _target_: torchaudio.transforms.MelSpectrogram
+          sample_rate: 16000
+          n_mels: 64
+        - _target_: torchaudio.transforms.AmplitudeToDB
+          stype: 'power'
+          top_db: 80
+
+batch_transforms:
+  train: null
+  inference: null

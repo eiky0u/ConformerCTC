@@ -1,0 +1,19 @@
+defaults:
+  - model: conformer
+  - metrics: ctc
+  - datasets: inference_example
+  - dataloader: inference_example
+  - transforms: inference
+  - _self_
+text_encoder:
+  _target_: src.text_encoder.CTCBPETextEncoder
+  pretrained_name: "openai/whisper-small"
+  lowercase: False
+inferencer:
+  device_tensors: ["spectrogram", "spectrogram_length", "text_encoded", "text_encoded_length"]
+  device: auto # device name or "auto"
+  use_amp: true
+  amp_dtype: auto         
+  save_path: "example" # any name here, can be a dataset name
+  seed: 1
+  from_pretrained: "saved/model_best.pth" # path to the pretrained model

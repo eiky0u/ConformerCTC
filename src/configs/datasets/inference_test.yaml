@@ -1,0 +1,5 @@
+val:
+  _target_: src.datasets.LibrispeechDataset
+  part: "test-clean"
+  data_dir: '/kaggle/input/librispeech'
+  instance_transforms: ${transforms.instance_transforms.inference}

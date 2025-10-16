@@ -1,0 +1,12 @@
+train:
+  _target_: src.datasets.LibrispeechDataset
+  part: "dev-clean"
+  limit: 2
+  instance_transforms: ${transforms.instance_transforms.train}
+# we filter partitions in one batch test to check the pipeline
+# do not filter test dataset, you want to evaluate on the whole dataset
+val:
+  _target_: src.datasets.LibrispeechDataset
+  part: "dev-clean"
+  limit: 2
+  instance_transforms: ${transforms.instance_transforms.inference}

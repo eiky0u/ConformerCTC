@@ -1,0 +1,5 @@
+inference:
+  _target_: src.datasets.CustomDirAudioDataset  
+  audio_dir: /kaggle/working/dataset/audio #path to your audio
+  transcription_dir: /kaggle/working/dataset/transcriptions #path to your transcriptions
+  instance_transforms: ${transforms.instance_transforms.inference}

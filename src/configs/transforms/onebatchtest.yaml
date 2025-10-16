@@ -1,0 +1,34 @@
+instance_transforms:
+  train:
+    get_spectrogram:
+      _target_: torchvision.transforms.v2.Compose
+      transforms:
+        - _target_: torchaudio.transforms.MelSpectrogram
+          sample_rate: 16000
+          n_mels: 64
+        - _target_: torchaudio.transforms.AmplitudeToDB
+          stype: 'power'
+          top_db: 80
+    get_wav_augs:
+      _target_: torchvision.transforms.v2.Compose
+      transforms:
+        - _target_: src.transforms.wav_augs.Gain
+          sample_rate: 16000
+          min_gain_in_db: -6
+          max_gain_in_db:  6
+          p: 0.5
+          p_mode: per_example
+  inference:
+    get_spectrogram:
+      _target_: torchvision.transforms.v2.Compose
+      transforms:
+        - _target_: torchaudio.transforms.MelSpectrogram
+          sample_rate: 16000
+          n_mels: 64
+        - _target_: torchaudio.transforms.AmplitudeToDB
+          stype: 'power'
+          top_db: 80
+
+batch_transforms:
+  train: null
+  inference: null
