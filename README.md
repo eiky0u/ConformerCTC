@@ -10,7 +10,7 @@
 
 ## About
 
-This repository contains a code for training and inferencing ConformerCTC model for ASR task.
+Implementation for training and inference of a Conformer CTC ASR model (PyTorch + Hydra).
 
 ## Installation
 
